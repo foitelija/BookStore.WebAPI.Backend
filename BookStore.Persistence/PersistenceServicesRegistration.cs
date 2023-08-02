@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Application.Intefaces.Persistence;
+using BookStore.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Persistence
 {
@@ -17,6 +14,10 @@ namespace BookStore.Persistence
             {
                 options.UseSqlServer(configuration.GetConnectionString("BookStoreConnection"));
             });
+
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }

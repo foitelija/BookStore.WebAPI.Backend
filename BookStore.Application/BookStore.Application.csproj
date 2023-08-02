@@ -10,4 +10,19 @@
     <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Books\Validators\" />
+    <Folder Include="DTOs\Orders\Validators\" />
+    <Folder Include="Features\Books\Handlers\Commands\" />
+    <Folder Include="Features\Books\Handlers\Queries\" />
+    <Folder Include="Features\Books\Requests\Commands\" />
+    <Folder Include="Features\Books\Requests\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+  </ItemGroup>
+
 </Project>
