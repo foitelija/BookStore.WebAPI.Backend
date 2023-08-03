@@ -45,8 +45,4 @@
     <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>
