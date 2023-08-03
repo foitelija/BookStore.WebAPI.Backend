@@ -14,28 +14,44 @@ namespace BookStore.Infrastructure.Services.Order
         {
             _ordersItemsRepository = ordersItemsRepository;
         }
+        /// <summary>
+        ///  Можно вынести это в отдельый таск репозитория
+        ///  и там использовать IQueryable<Object>
+        ///  после чего перебрать фильтры и вернуть только результат.
+        /// </summary>
+        /// <param name="id">номер</param>
+        /// <param name="orderDate">дата заказа</param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
         public async Task<List<GetOrdersDto>> GetOrdersByFilter(int? id, DateTime? orderDate)
         {
             var items = await _ordersItemsRepository.GetOrderedItemsAsync();
 
             if(id.HasValue)
             {
+                //Если у нас заполнен ID, ищем.
                 items = items.Where(x=>x.Order.Id.Equals(id.Value)).ToList();
             }
 
             if(orderDate.HasValue || orderDate > DateTime.MinValue)
             {
+                //Если у нас заполнена дата, ищем
                 items = items.Where(x=>x.Order.DateCreated >= orderDate).ToList();
             }
 
-            if (items.Count == 0)
+            if (!items.Any())
             {
+                //Если пусто, выбиваем эксепешен
                 throw new NotFoundException("ничего не найдено", nameof(GetOrdersByFilter));
             }
 
 
+            //группируем покупки по имени пользователя.
             var groupedByUser = items.GroupBy(x => x.Order.CustomerName).ToDictionary(g => g.Key, g => g.ToList());
 
+            //составляем модель результата.
+            //она нужна для того, чтобы возвращать пользователю только необходимые данные,
+            //не нужно же возвращать на фронт ID книги, дату добавления в бд и т.д
             var result = groupedByUser.Select(group => new GetOrdersDto
             {
                 Name = group.Key,
