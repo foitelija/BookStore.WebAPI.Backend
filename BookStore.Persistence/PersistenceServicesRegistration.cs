@@ -17,6 +17,7 @@ namespace BookStore.Persistence
 
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IOrdersItemsRepository, OrdersItemsRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;

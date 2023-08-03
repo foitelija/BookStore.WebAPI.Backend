@@ -1,4 +1,12 @@
+using BookStore.Persistence;
+using BookStore.Application;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigureApplicationServices();
+builder.Services.ConfigurePersistenceServices(builder.Configuration);
+
+
 
 // Add services to the container.
 
