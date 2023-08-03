@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStore.Application.Commands.Books.Requests.Queries;
+using BookStore.Application.CustomsExceptions;
 using BookStore.Application.DTOs.Books;
 using BookStore.Application.Intefaces.Persistence;
 using MediatR;
@@ -24,15 +25,16 @@ namespace BookStore.Application.Commands.Books.Handlers.Queries
 
         public async Task<BooksDto> Handle(GetBookDetailsRequest request, CancellationToken cancellationToken)
         {
-            try
+
+            var book = await _booksRepository.Get(request.Id);
+
+            if (book == null)
             {
-                var book = await _booksRepository.Get(request.Id);
-                return _mapper.Map<BooksDto>(book);
+                throw new NotFoundException("Такого значения нет", request.Id);
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            return _mapper.Map<BooksDto>(book);
+
         }
     }
 }

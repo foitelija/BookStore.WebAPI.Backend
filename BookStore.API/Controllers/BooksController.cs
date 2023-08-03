@@ -29,15 +29,10 @@ namespace BookStore.API.Controllers
         [HttpGet("get-a-single-book/{id}")]
         public async Task<ActionResult<BooksDto>> Get(int id)
         {
-            try
-            {
-                var book = await _mediator.Send(new GetBookDetailsRequest { Id = id });
-                return Ok(book);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            var book = await _mediator.Send(new GetBookDetailsRequest { Id = id });
+            return Ok(book);
+
         }
     }
 }

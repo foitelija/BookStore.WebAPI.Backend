@@ -43,7 +43,9 @@ namespace BookStore.Persistence.Repositories
 
         public async Task<IReadOnlyList<T>> GetAll()
         {
+
             return await _context.Set<T>().ToListAsync();
+
         }
 
         public async Task Update(T entity)

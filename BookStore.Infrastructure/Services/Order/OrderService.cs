@@ -27,6 +27,12 @@ namespace BookStore.Infrastructure.Services.Order
                 items = items.Where(x=>x.Order.DateCreated >= orderDate).ToList();
             }
 
+            if (items.Count == 0)
+            {
+                throw new KeyNotFoundException();
+            }
+
+
             var groupedByUser = items.GroupBy(x => x.Order.CustomerName).ToDictionary(g => g.Key, g => g.ToList());
 
             var result = groupedByUser.Select(group => new GetOrdersDto

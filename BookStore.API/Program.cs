@@ -1,6 +1,7 @@
 using BookStore.Persistence;
 using BookStore.Application;
 using BookStore.Infrastructure;
+using BookStore.Application.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

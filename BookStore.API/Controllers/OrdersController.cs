@@ -20,19 +20,51 @@ namespace BookStore.API.Controllers
             _orderService = orderService;
         }
 
+        /// <summary>
+        /// Создание нового заказа.
+        /// </summary>
+        /// <param name="createOrders">
+        ///  Принимает модель: имя пользователя и список выбранных книг
+        /// </param>
+        /// <returns>
+        /// Возвращает созданную модель.
+        /// </returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        /// 
         [HttpPost("create-new-order")]
         public async Task<ActionResult> CreateOrder([FromBody] CreateOrdersRequestDto createOrders)
         {
-            var command = new CreateOrderCommand { OrdersRequestDto = createOrders };
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            try
+            {
+                var command = new CreateOrderCommand { OrdersRequestDto = createOrders };
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("Ошибка отправки запроса, проверьте правильность заполнения полей");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500,"Internal server Error");
+            }
+            
         }
 
         [HttpGet("get-orders-by-filter")]
         public async Task<ActionResult> GetOrders([FromQuery] int? id, DateTime? orderDate)
         {
-            var items = await _orderService.GetOrdersByFilter(id, orderDate);
-            return Ok(items);
+            try
+            {
+                var items = await _orderService.GetOrdersByFilter(id, orderDate);
+                return Ok(items);
+            }
+            catch(KeyNotFoundException)
+            {
+                return NotFound("Данных по вашему запросу не найдено.");
+            }
+            
         }
     }
 }
