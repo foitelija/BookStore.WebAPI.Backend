@@ -51,12 +51,13 @@ namespace BookStore.Infrastructure.Services.Order
 
             //составляем модель результата.
             //она нужна для того, чтобы возвращать пользователю только необходимые данные,
-            //не нужно же возвращать на фронт ID книги, дату добавления в бд и т.д
+            //не нужно же возвращать дату добавления в бд и т.д
             var result = groupedByUser.Select(group => new GetOrdersDto
             {
                 Name = group.Key,
                 Books = group.Value.Select(p=> new BooksDto 
                 {
+                    Id = p.Book.Id,
                     Author = p.Book.Author,
                     Description = p.Book.Description,
                     Genre = p.Book.Genre,
