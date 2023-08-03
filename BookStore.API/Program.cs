@@ -1,9 +1,11 @@
 using BookStore.Persistence;
 using BookStore.Application;
+using BookStore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureApplicationServices();
+builder.Services.ConfigureInfrastructureServices();
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
 
 
