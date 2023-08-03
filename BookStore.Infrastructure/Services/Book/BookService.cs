@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookStore.Application.CustomsExceptions;
 using BookStore.Application.DTOs.Books;
 using BookStore.Application.Intefaces.Infrastructure.Book;
 using BookStore.Application.Intefaces.Persistence;
@@ -34,6 +35,12 @@ namespace BookStore.Infrastructure.Services.Book
             {
                 books = books.Where(y => y.Year.Equals(year)).ToList();
             }
+
+            if(!books.Any()) 
+            {
+                throw new NotFoundException("ничего не найдено", nameof(GetBooksByFilter));
+            }
+
 
 
             return _mapper.Map<List<BooksDto>>(books);

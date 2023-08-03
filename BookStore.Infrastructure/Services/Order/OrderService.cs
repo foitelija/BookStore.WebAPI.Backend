@@ -1,4 +1,5 @@
-﻿using BookStore.Application.DTOs.Books;
+﻿using BookStore.Application.CustomsExceptions;
+using BookStore.Application.DTOs.Books;
 using BookStore.Application.DTOs.Orders;
 using BookStore.Application.Intefaces.Infrastructure.Order;
 using BookStore.Application.Intefaces.Persistence;
@@ -29,7 +30,7 @@ namespace BookStore.Infrastructure.Services.Order
 
             if (items.Count == 0)
             {
-                throw new KeyNotFoundException();
+                throw new NotFoundException("ничего не найдено", nameof(GetOrdersByFilter));
             }
 
 

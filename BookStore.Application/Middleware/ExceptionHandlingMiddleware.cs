@@ -1,13 +1,8 @@
 ﻿using BookStore.Application.CustomsExceptions;
 using BookStore.Application.DTOs.Errors;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace BookStore.Application.Middleware
 {
@@ -32,7 +27,7 @@ namespace BookStore.Application.Middleware
             }
             catch (BadRequestException ex)
             {
-                await HandleExceptionAsync(context, ex.Message, HttpStatusCode.BadRequest, "Ошибка запроса");
+                await HandleExceptionAsync(context, ex.Message, HttpStatusCode.BadRequest, "Ошибка запроса, проверьте правильность заполнения полей");
             }
             catch (Exception ex)
             {

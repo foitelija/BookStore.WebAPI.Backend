@@ -31,40 +31,34 @@ namespace BookStore.API.Controllers
         /// </returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="500">Ошибка на стороне сервера</response>
+        /// <response code="400">Ошибка запроса</response>
         /// 
         [HttpPost("create-new-order")]
         public async Task<ActionResult> CreateOrder([FromBody] CreateOrdersRequestDto createOrders)
         {
-            try
-            {
-                var command = new CreateOrderCommand { OrdersRequestDto = createOrders };
-                var response = await _mediator.Send(command);
-                return Ok(response);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest("Ошибка отправки запроса, проверьте правильность заполнения полей");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500,"Internal server Error");
-            }
-            
+            var command = new CreateOrderCommand { OrdersRequestDto = createOrders };
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
+        /// <summary>
+        /// Получение списка заказов.
+        /// </summary>
+        /// <param name="GetOrders">
+        ///  Принимает модель: ID и дату закзаа
+        /// </param>
+        /// <returns>
+        /// Возвращает созданную модель.
+        /// </returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        /// <response code="404">Данные не найдены</response>
+        /// 
         [HttpGet("get-orders-by-filter")]
         public async Task<ActionResult> GetOrders([FromQuery] int? id, DateTime? orderDate)
         {
-            try
-            {
-                var items = await _orderService.GetOrdersByFilter(id, orderDate);
-                return Ok(items);
-            }
-            catch(KeyNotFoundException)
-            {
-                return NotFound("Данных по вашему запросу не найдено.");
-            }
-            
+            var items = await _orderService.GetOrdersByFilter(id, orderDate);
+            return Ok(items);
         }
     }
 }

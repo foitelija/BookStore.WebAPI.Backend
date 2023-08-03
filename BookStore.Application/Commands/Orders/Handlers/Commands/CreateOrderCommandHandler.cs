@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Commands.Orders.Requests.Commands;
+using BookStore.Application.CustomsExceptions;
 using BookStore.Application.DTOs.Orders;
 using BookStore.Application.DTOs.Orders.Validators;
 using BookStore.Application.Intefaces.Persistence;
@@ -28,7 +29,7 @@ namespace BookStore.Application.Commands.Orders.Handlers.Commands
             if(validationResult.IsValid == false)
             {
                 var errors = validationResult.Errors.Select(e=>e.ErrorMessage);
-                throw new ValidationException("Данные не валидны");
+                throw new BadRequestException("Данные не валидны");
             }
 
             var placedOrder = await _ordersRepository.Add(new Domain.Orders { CustomerName = request.OrdersRequestDto.CustomerName });
