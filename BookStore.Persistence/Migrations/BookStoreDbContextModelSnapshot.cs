@@ -37,9 +37,6 @@ namespace BookStore.Persistence.Migrations
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -50,9 +47,6 @@ namespace BookStore.Persistence.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrdersId")
-                        .HasColumnType("int");
 
                     b.Property<double?>("Price")
                         .HasColumnType("float");
@@ -75,9 +69,30 @@ namespace BookStore.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrdersId");
-
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookStore.Domain.OrderedItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderedItems");
                 });
 
             modelBuilder.Entity("BookStore.Domain.Orders", b =>
@@ -88,10 +103,6 @@ namespace BookStore.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CustomerAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -99,24 +110,28 @@ namespace BookStore.Persistence.Migrations
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("BookStore.Domain.Books", b =>
+            modelBuilder.Entity("BookStore.Domain.OrderedItems", b =>
                 {
-                    b.HasOne("BookStore.Domain.Orders", null)
-                        .WithMany("Books")
-                        .HasForeignKey("OrdersId");
-                });
+                    b.HasOne("BookStore.Domain.Books", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("BookStore.Domain.Orders", b =>
-                {
-                    b.Navigation("Books");
+                    b.HasOne("BookStore.Domain.Orders", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

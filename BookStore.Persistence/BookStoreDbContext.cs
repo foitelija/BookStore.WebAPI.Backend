@@ -18,21 +18,11 @@ namespace BookStore.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
-            {
-                entry.Entity.DateModified = DateTime.Now;
-
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Entity.DateCreated = DateTime.Now;
-                }
-            }
-
-
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Books> Books { get; set; }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderedItems> OrderedItems { get; set; }
     }
 }
