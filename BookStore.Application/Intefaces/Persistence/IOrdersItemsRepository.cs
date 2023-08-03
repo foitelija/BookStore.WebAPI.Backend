@@ -9,5 +9,6 @@ namespace BookStore.Application.Intefaces.Persistence
 {
     public interface IOrdersItemsRepository : IGenericRepository<OrderedItems>
     {
+        Task<List<OrderedItems>> GetOrderedItemsAsync();
     }
 }

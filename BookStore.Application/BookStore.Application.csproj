@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Orders\Handlers\Queries\" />
     <Folder Include="DTOs\Books\Validators\" />
     <Folder Include="DTOs\Orders\Validators\" />
   </ItemGroup>
