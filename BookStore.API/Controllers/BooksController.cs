@@ -58,5 +58,23 @@ namespace BookStore.API.Controllers
             var book = await _mediator.Send(new GetBookDetailsRequest { Id = id });
             return Ok(book);
         }
+
+        /// <summary>
+        /// Получение книги по ID
+        /// </summary>
+        /// <param name="GetAllBooks">
+        /// </param>
+        /// <returns>
+        /// Возвращает DTO список со всеми книгами.
+        /// </returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="500">Ошибка на стороне сервера</response>
+        /// 
+        [HttpGet("get-all-books")]
+        public async Task<ActionResult<BooksDto>> GetAllBooks()
+        {
+            var books = await _mediator.Send(new GetBookListRequest());
+            return Ok(books);
+        }
     }
 }
