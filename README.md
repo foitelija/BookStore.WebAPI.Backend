@@ -27,3 +27,6 @@
 # Настройка БД
 
 **Строку в appsettings.json заменить на свою. Дамп и сами файлы БД приложил обратным сообщением.**
+
+# Размещение в Docker
+![Screenshot_3](https://github.com/foitelija/BookStore.WebAPI.Backend/assets/57097310/71f435e0-1257-4594-81c7-965098ec0307)
