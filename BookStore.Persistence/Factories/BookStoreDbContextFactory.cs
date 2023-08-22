@@ -10,7 +10,7 @@ namespace BookStore.Persistence.Factories
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettingsPersistence.json")
                 .Build();
 
             var builder = new DbContextOptionsBuilder<BookStoreDbContext>();

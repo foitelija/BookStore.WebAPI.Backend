@@ -7,17 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.Development.json" />
-    <None Remove="appsettings.json" />
+    <None Remove="appsettingsPersistence.Development.json" />
+    <None Remove="appsettingsPersistence.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.Development.json">
+    <Content Include="appsettingsPersistence.Development.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="appsettings.json">
+    <Content Include="appsettingsPersistence.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
